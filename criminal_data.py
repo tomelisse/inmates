@@ -39,10 +39,6 @@ def download_data(how_many):
         charges = [table_rows[i].findAll('td')[1].text.strip() for i in range(1, len(table_rows))]
         inmates[name] = inmate_details(date, age, race, sex, city, charges)
 
-    # for inmate, details in inmates.items():
-    #     print inmate
-    #     print charges
-    #     print '----'
     return inmates
 
 if __name__ == '__main__':

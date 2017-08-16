@@ -3,17 +3,25 @@ from itertools import groupby
 from operator import attrgetter
 from collections import OrderedDict
 
-def race_distribution(inmates):
-    sorted_inmates = OrderedDict(sorted(inmates.items(), key = lambda x: attrgetter('race')(x[1])))
-    for inmate, details in sorted_inmates.items():
-        print inmate, details.race
-    # print sorted_inmates
+def distribution(inmates, attribute):
+    ''' prepares distribution data wrt attribute '''
+    dist = dict()
+    sorted_inmates = OrderedDict(sorted(inmates.items(), 
+                     key = lambda x: attrgetter(attribute)(x[1])))
+    for attr, gr in groupby(sorted_inmates.items(), 
+                            key = lambda x: attrgetter(attribute)(x[1])):
+        dist[attr] = len(list(gr))
+    return dist
 
 def prepare_distributions():
-    how_many = 15
+    ''' prepares distributions of inmates wrt to age, race and sex '''
+    how_many = 20 
     inmates = cd.download_data(how_many) 
-    race_distribution(inmates)
-    print len(inmates)
+    age  = distribution(inmates, 'age')
+    race = distribution(inmates, 'race')
+    sex  = distribution(inmates, 'sex')
+    return age, race, sex
 
 if __name__ == '__main__':
     prepare_distributions()
+
