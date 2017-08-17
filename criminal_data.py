@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from collections import namedtuple
 
-def download_data(how_many):
+def download_data(how_many = 'all'):
     ''' downloads data and creates a dictionaty of inmates'''
     url_to_scrape = 'http://apps2.polkcountyiowa.gov/inmatesontheweb/'
     # load the inmates listing
@@ -12,7 +12,9 @@ def download_data(how_many):
     soup = BeautifulSoup(r.text, "lxml")
     links = []
     # loop over inmates
-    for table_row in soup.select(".inmatesList tr")[:how_many + 1]:
+    table_rows = soup.select(".inmatesList tr")
+    if how_many == 'all': how_many = len(table_rows)     
+    for table_row in table_rows[:how_many + 1]:
         table_cells = table_row.findAll('td')
         if len(table_cells) > 0:
             relative_url = table_cells[0].find('a')['href']

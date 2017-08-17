@@ -15,8 +15,9 @@ def distribution(inmates, attribute):
 
 def prepare_distributions():
     ''' prepares distributions of inmates wrt to age, race and sex '''
-    how_many = 20 
-    inmates = cd.download_data(how_many) 
+    how_many = 5
+    inmates = cd.download_data() 
+    # inmates = cd.download_data(how_many) 
     age  = distribution(inmates, 'age')
     race = distribution(inmates, 'race')
     sex  = distribution(inmates, 'sex')
